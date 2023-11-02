@@ -54,7 +54,7 @@ html, body {
 .timer-item__separator {
 	font-size: calc(var(--index) * 2.25);
 	position: relative;
-	top: -16px;
+	top: -10px;
 }
 
 .timer-value {
