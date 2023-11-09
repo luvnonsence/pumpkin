@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const hoursValue = document.querySelector('.timer-hours .timer-value');
 	const minutesValue = document.querySelector('.timer-minutes .timer-value');
 	const secondsValue = document.querySelector('.timer-seconds .timer-value');
+	const secondsValueAll = document.querySelector('.timer__seconds-container .timer-value');
 
 	const daysText = document.querySelector('.timer-day .timer-text');
 	const hoursText = document.querySelector('.timer-hours .timer-text');
@@ -24,11 +25,14 @@ document.addEventListener('DOMContentLoaded', () => {
 		let hours = Math.floor(timePass / 1000 / 60 / 60) % 24;
 		let minutes = Math.floor(timePass / 1000 / 60) % 60;
 		let seconds = Math.floor(timePass / 1000) % 60;
-
+		let secondsAll = Math.floor(timePass / 1000);
+		
 		daysValue.textContent = days < 10 ? '0' + days : days;
 		hoursValue.textContent = hours < 10 ? '0' + hours : hours;
 		minutesValue.textContent = minutes < 10 ? '0' + minutes : minutes;
 		secondsValue.textContent = seconds < 10 ? '0' + seconds : seconds;
+		secondsValueAll.textContent = (secondsAll).toLocaleString();
+
 
 		daysText.textContent = declOfNum(days, ['День', 'Дня', 'Дней']);
 		hoursText.textContent = declOfNum(hours, ['Час', 'Часа', 'Часов']);
@@ -39,4 +43,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	timeCount();
 
 	setInterval(timeCount, 1000);
+
+	const swiper = new Swiper('.swiper', {
+		loop: true,
+		autoplay: {
+			delay: 3000,
+		},
+	});
 });
