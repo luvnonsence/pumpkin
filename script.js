@@ -1,53 +1,73 @@
 document.addEventListener('DOMContentLoaded', () => {
+	// Таймер
 	const loveDate = new Date('Feb 2 2023 17:57:00');
 
-	const daysValue = document.querySelector('.timer-day .timer-value');
-	const hoursValue = document.querySelector('.timer-hours .timer-value');
-	const minutesValue = document.querySelector('.timer-minutes .timer-value');
-	const secondsValue = document.querySelector('.timer-seconds .timer-value');
-	const secondsValueAll = document.querySelector('.timer__seconds-container .timer-value');
+	const timerValues = {
+		years: document.querySelector('.timer-year .timer-value'),
+		days: document.querySelector('.timer-day .timer-value'),
+		hours: document.querySelector('.timer-hours .timer-value'),
+		minutes: document.querySelector('.timer-minutes .timer-value'),
+		seconds: document.querySelector('.timer-seconds .timer-value'),
+		secondsAll: document.querySelector('.timer__seconds-container .timer-value'),
+	};
 
-	const daysText = document.querySelector('.timer-day .timer-text');
-	const hoursText = document.querySelector('.timer-hours .timer-text');
-	const minutesText = document.querySelector('.timer-minutes .timer-text');
-	const secondsText = document.querySelector('.timer-seconds .timer-text');
+	const timerTexts = {
+		years: document.querySelector('.timer-year .timer__year-text'),
+		days: document.querySelector('.timer-day .timer-text'),
+		hours: document.querySelector('.timer-hours .timer-text'),
+		minutes: document.querySelector('.timer-minutes .timer-text'),
+		seconds: document.querySelector('.timer-seconds .timer-text'),
+	};
 
 	function declOfNum(number, titles) {
-		let cases = [2, 0, 1, 1, 1, 2];
-		return titles[number % 100 > 4 && number % 100 < 20 ? 2 : cases[number % 10 < 5 ? number % 10 : 5]];
+		const cases = [2, 0, 1, 1, 1, 2];
+		return titles[
+			number % 100 > 4 && number % 100 < 20 ? 2 : cases[number % 10 < 5 ? number % 10 : 5]
+		];
 	}
 
+	const updateTimerDisplay = (value, element) => {
+		element.textContent = value < 10 ? '0' + value : value;
+	};
+
+	const updateYearDisplay = (value, element) => {
+		element.textContent = value;
+	};
+
 	const timeCount = () => {
-		let now = new Date();
-		let timePass = now - loveDate;
+		const now = new Date();
+		const timePass = now - loveDate;
 
-		let days = Math.floor(timePass / 1000 / 60 / 60 / 24);
-		let hours = Math.floor(timePass / 1000 / 60 / 60) % 24;
-		let minutes = Math.floor(timePass / 1000 / 60) % 60;
-		let seconds = Math.floor(timePass / 1000) % 60;
-		let secondsAll = Math.floor(timePass / 1000);
-		
-		daysValue.textContent = days < 10 ? '0' + days : days;
-		hoursValue.textContent = hours < 10 ? '0' + hours : hours;
-		minutesValue.textContent = minutes < 10 ? '0' + minutes : minutes;
-		secondsValue.textContent = seconds < 10 ? '0' + seconds : seconds;
-		secondsValueAll.textContent = (secondsAll).toLocaleString();
+		const years = Math.floor(timePass / 1000 / 60 / 60 / 24 / 365);
+		// console.log(years);
+		const days = Math.floor(timePass / 1000 / 60 / 60 / 24);
+		const hours = Math.floor(timePass / 1000 / 60 / 60) % 24;
+		const minutes = Math.floor(timePass / 1000 / 60) % 60;
+		const seconds = Math.floor(timePass / 1000) % 60;
+		const secondsAll = Math.floor(timePass / 1000);
 
+		updateTimerDisplay(days, timerValues.days);
+		updateTimerDisplay(hours, timerValues.hours);
+		updateTimerDisplay(minutes, timerValues.minutes);
+		updateTimerDisplay(seconds, timerValues.seconds);
+		timerValues.secondsAll.textContent = secondsAll.toLocaleString();
+		updateYearDisplay(years, timerValues.years);
 
-		daysText.textContent = declOfNum(days, ['День', 'Дня', 'Дней']);
-		hoursText.textContent = declOfNum(hours, ['Час', 'Часа', 'Часов']);
-		minutesText.textContent = declOfNum(minutes, ['Минуту', 'Минуты', 'Минут']);
-		secondsText.textContent = declOfNum(seconds, ['Секунду', 'Секунды', 'Секунд']);
+		timerTexts.days.textContent = declOfNum(days, ['День', 'Дня', 'Дней']);
+		timerTexts.hours.textContent = declOfNum(hours, ['Час', 'Часа', 'Часов']);
+		timerTexts.minutes.textContent = declOfNum(minutes, ['Минуту', 'Минуты', 'Минут']);
+		timerTexts.seconds.textContent = declOfNum(seconds, ['Секунду', 'Секунды', 'Секунд']);
+		timerTexts.years.textContent = declOfNum(years, ['Год', 'Года', 'Лет']);
 	};
 
 	timeCount();
-
 	setInterval(timeCount, 1000);
 
+	// Свайпер
 	const swiper = new Swiper('.swiper', {
 		loop: true,
 		autoplay: {
-			delay: 3000,
+			delay: 5000,
 		},
 	});
 });
